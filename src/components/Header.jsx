@@ -1,4 +1,4 @@
-import "../App.css";
+import "../assets/css/App.css";
 import formatNumber  from "../utils";
 const Header = ({ total,monthPro}) => {
 

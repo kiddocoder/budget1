@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from 'uuid';
-import './App.css';
+import '../src/assets/css/App.css';
 import Header from './components/Header';
 import TableResult from './components/TableResult';
 

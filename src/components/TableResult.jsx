@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import formatNumber from "../utils";
-import "../App.css";
+import "../assets/css/App.css";
 
 const TableResult = ({ data, handleDelete }) => {
     const [incomes, setIncomes] = useState([]);
