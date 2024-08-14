@@ -1,12 +1,16 @@
+import {useState} from 'react';
 import "../App.css";
 
 const Header = () =>{
+
+      const [currentMounth , setCurrentMounth] =  useState('');
+      setCurrentMounth('Today');
 
       return (
             <>
             <section className="header flex items-center justify-center text-white w-full h-[250px] bg-cover bg-center">
                   <div className="flex flex-col gap-2">
-                        <p className="font-light text-xl">Available budget in september : </p>
+                        <p className="font-light text-xl">Available budget in {currentMounth && currentMounth} : </p>
                         <p className="text-4xl text-center">+1,12548</p>
 
                         <div className="mt-5 flex flex-col gap-2">
