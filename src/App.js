@@ -92,7 +92,7 @@ const App = () => {
                 total.expenses += parseFloat(item.value) || 0;
             }
             total.all = total.incomes - total.expenses;
-            total.Tot += parseFloat(item.value) || 0; // total sum 
+            total.Tot += parseFloat(item.value) || 0; // total sum
         });
 
         total.percentIncomes =  total.Tot ? ((total.incomes /  total.Tot) * 100).toFixed(2): 0;
@@ -111,7 +111,7 @@ const App = () => {
     return (
         <>
             <Header total={total} monthPro={monthPro} />
-            <form className="flex gap-5 my-5 justify-center items-center" onSubmit={handleSubmit}>
+            <form className="flex gap-5 p-2 justify-center items-center  bg-[#F2F2F2]" onSubmit={handleSubmit}>
                 <select className="p-3 w-[100px] rounded-[5px]" name='type' value={values.type} onChange={handleChange} required>
                     <option value="income">+</option>
                     <option value="expense">-</option>
@@ -122,8 +122,8 @@ const App = () => {
             </form>
 
             {/* Month and Year Selector */}
-            <div className="flex justify-center items-center mb-5">
-                <select className="p-3 rounded-[5px]" value={selectedMonth} onChange={handleMonthChange}>
+            <div className="flex justify-center items-center mt-5 mb-5">
+                <select className="mr-3 p-3 rounded-[5px] bg-[#F2F2F2]" value={selectedMonth} onChange={handleMonthChange}>
                     {Array.from({ length: 12 }, (_, index) => (
                         <option key={index} value={index}>
                             {new Date(0, index).toLocaleString('en-US', { month: 'long' })}
@@ -131,7 +131,7 @@ const App = () => {
                     ))}
                 </select>
 
-                <select className="p-3 rounded-[5px]" value={selectedYear} onChange={handleYearChange}>
+                <select className="p-3 rounded-[5px] bg-[#F2F2F2]" value={selectedYear} onChange={handleYearChange}>
                     {yearRange.map(year => (
                         <option key={year} value={year}>{year}</option>
                     ))}
