@@ -6,8 +6,9 @@ const TableResult = ({ data }) => {
     const [expenses, setExpenses] = useState([]);
 
     useEffect(() => {
-        const incomeItems = data.filter(item => item.type === "income");
-        const expenseItems = data.filter(item => item.type === "expense");
+        // Ensure data is an array
+        const incomeItems = Array.isArray(data) ? data.filter(item => item.type === "income") : [];
+        const expenseItems = Array.isArray(data) ? data.filter(item => item.type === "expense") : [];
         setIncomes(incomeItems);
         setExpenses(expenseItems);
     }, [data]);
@@ -23,7 +24,7 @@ const TableResult = ({ data }) => {
                                 <span>{item.description}</span>
                                 <div className='flex justify-between'>
                                     <span>{item.value}</span>
-                                    <span>X</span>
+                                    <span id='deletebtn' className='ml-2'>X</span>
                                 </div>
                             </li>
                         ))}
@@ -37,7 +38,7 @@ const TableResult = ({ data }) => {
                                 <span>{item.description}</span>
                                 <div className='flex justify-between'>
                                     <span>{item.value}</span>
-                                    <span>X</span>
+                                    <span id='deletebtn' className='ml-2'>X</span>
                                 </div>
                             </li>
                         ))}

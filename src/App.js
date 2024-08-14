@@ -14,8 +14,9 @@ const App = () => {
     });
 
     useEffect(() => {
-        const localData = JSON.parse(localStorage.getItem('data')) || [];
-        setData(localData);
+        // Retrieve data from local storage and ensure it's an array
+        const localData = JSON.parse(localStorage.getItem('data'));
+        setData(Array.isArray(localData) ? localData : []); // Default to empty array if not an array
     }, []);
 
     const handleChange = (e) => {
@@ -24,13 +25,19 @@ const App = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const newData = [...datas, values];
-        localStorage.setItem('data', JSON.stringify(newData));
-        setData(newData);
-        setValues({ ...values, id: Date.now(), description: "", value: 0 }); // Reset values
+
+        // Ensure values are valid before adding to datas
+        if (values.description && values.value) {
+            const newData = [...datas, { ...values, id: Date.now() }]; // Add unique id to the new item
+            localStorage.setItem('data', JSON.stringify(newData)); // Update local storage
+            setData(newData); // Update state
+            setValues({ type: "income", description: "", value: 0 }); // Reset values after submission
+        }
     }
 
     const calculateTotals = (data) => {
+        if (!Array.isArray(data)) return { all: 0, expenses: 0, incomes: 0, percentIncomes: 0, percentExpenses: 0 };
+
         const total = {
             all: 0,
             expenses: 0,
@@ -39,17 +46,17 @@ const App = () => {
             percentExpenses: 0
         };
 
-        data&&data.forEach(item => {
-            total.all += parseFloat(item.value);
+        data.forEach(item => {
+            total.all += parseFloat(item.value) || 0;
             if (item.type === "income") {
-                total.incomes += parseFloat(item.value);
+                total.incomes += parseFloat(item.value) || 0;
             } else {
-                total.expenses += parseFloat(item.value);
+                total.expenses += parseFloat(item.value) || 0;
             }
         });
 
-        total.percentIncomes = total.incomes ? ((total.incomes / total.all) * 100).toFixed(2) : 0;
-        total.percentExpenses = total.expenses ? ((total.expenses / total.all) * 100).toFixed(2) : 0;
+        total.percentIncomes = total.all ? ((total.incomes / total.all) * 100).toFixed(2) : 0;
+        total.percentExpenses = total.all ? ((total.expenses / total.all) * 100).toFixed(2) : 0;
 
         return total;
     };
