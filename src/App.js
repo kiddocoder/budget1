@@ -13,6 +13,8 @@ const App = () => {
         value: 0,
         date: new Date()
     });
+    const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth()); // Default to current month
+    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear()); // Default to current year
 
     useEffect(() => {
         const localData = JSON.parse(localStorage.getItem('data')) || [];
@@ -26,7 +28,7 @@ const App = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (values.description && values.value) {
-            const newData = [...datas, { ...values, id: uuidv4() }]; // Use UUID for new items
+            const newData = [...datas, { ...values, id: uuidv4(), date: new Date() }];
             localStorage.setItem('data', JSON.stringify(newData));
             setData(newData);
             setValues({ id: uuidv4(), type: "income", description: "", value: 0 }); // Reset values
@@ -39,8 +41,20 @@ const App = () => {
         setData(updatedData); // Update state
     };
 
+    const handleMonthChange = (e) => {
+        setSelectedMonth(e.target.value);
+    };
+
+    const handleYearChange = (e) => {
+        setSelectedYear(e.target.value);
+    };
+
     const calculateTotals = (data) => {
-        if (!Array.isArray(data)) return { all: 0, expenses: 0, incomes: 0, percentIncomes: 0, percentExpenses: 0 };
+        // Filter data for selected month and year
+        const filteredData = data.filter(item => {
+            const itemDate = new Date(item.date);
+            return itemDate.getMonth() === parseInt(selectedMonth) && itemDate.getFullYear() === parseInt(selectedYear);
+        });
 
         const total = {
             all: 0,
@@ -50,7 +64,7 @@ const App = () => {
             percentExpenses: 0
         };
 
-        data.forEach(item => {
+        filteredData.forEach(item => {
             total.all += parseFloat(item.value) || 0;
             if (item.type === "income") {
                 total.incomes += parseFloat(item.value) || 0;
@@ -62,10 +76,10 @@ const App = () => {
         total.percentIncomes = total.all ? ((total.incomes / total.all) * 100).toFixed(2) : 0;
         total.percentExpenses = total.all ? ((total.expenses / total.all) * 100).toFixed(2) : 0;
 
-        return total;
+        return { total, filteredData };
     };
 
-    const total = calculateTotals(datas);
+    const { total, filteredData } = calculateTotals(datas);
 
     return (
         <>
@@ -79,7 +93,26 @@ const App = () => {
                 <input className="p-3 w-[100px] rounded-[5px]" name='value' type="number" min={0.00} step={0.1} placeholder='value' value={values.value} onChange={handleChange} required />
                 <button type='submit' className="p-3 border-neutral-800 bg-green-800 rounded-[5px] text-white text-[18px] cursor-pointer">Add</button>
             </form>
-            <TableResult data={datas} handleDelete={handleDelete} />
+
+            {/* Month and Year Selector */}
+            <div className="flex justify-center items-center mb-5">
+                <select className="p-3 rounded-[5px]" value={selectedMonth} onChange={handleMonthChange}>
+                    {Array.from({ length: 12 }, (_, index) => (
+                        <option key={index} value={index}>
+                            {new Date(0, index).toLocaleString('default', { month: 'long' })}
+                        </option>
+                    ))}
+                </select>
+                <select className="p-3 rounded-[5px]" value={selectedYear} onChange={handleYearChange}>
+                    {/* You can modify the range of years as needed */}
+                    {[2024,2023, 2022, 2021].map(year => (
+                        <option key={year} value={year}>{year}</option>
+                    ))}
+                </select>
+            </div>
+
+            {/* Displaying filtered data */}
+            <TableResult data={filteredData} handleDelete={handleDelete} />
         </>
     )
 }

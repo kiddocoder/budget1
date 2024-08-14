@@ -6,14 +6,14 @@ const Header = ({ total }) => {
 
     useEffect(() => {
         const date = new Date();
-        const currentMonth = date.toLocaleString('default', { month: 'long' });
+        const currentMonth = date.toLocaleString('en-US', { month: 'long' });
         setMonthName(currentMonth);
     }, []); // Run only once when the component mounts
 
     return (
         <section className="header flex flex-col justify-center items-center text-white w-full h-[250px] bg-cover bg-center">
             <div className="flex flex-col gap-2">
-                <p className="font-light text-xl text-center">Available budget in {monthName}:</p>
+                <p className="font-light text-xl text-center">Available budget in {monthName} :</p>
                 <p className="text-4xl text-center">{total && total.all}</p>
                 <div className="mt-5 flex flex-col gap-2">
                     <div className="flex justify-between p-2 bg-emerald-500">
