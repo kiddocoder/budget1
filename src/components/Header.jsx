@@ -15,7 +15,7 @@ const Header = ({ total,monthPro}) => {
                             <span className="mr-2" >{(total.incomes>0)? '+' : ''}{total.incomes && total.incomes}</span>
                             <span className="align-middle bg-emerald-300 rounded-sm p-1 text-[12px]" id="percent">{total && total.percentExpenses}%</span>
                         </div>
-                    </div>
+                    </div> 
 
                     <div className="item flex justify-between items-center w-[300px] p-2 bg-red-500 cursor-pointer">
                         <span className="text-xl text-black">Expenses</span>
