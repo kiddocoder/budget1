@@ -5,6 +5,7 @@ const TableResult = () => {
     return (
         <section className='flex justify-center items-center'>
             <div className='flex space-x-10'>
+
                 <div className='text-emerald-500 w-[550px]'>
                     <h1 className='text-xl font-bold mb-2'>INCOMES</h1>
                     <ul className='bg-white rounded-lg'>
@@ -58,6 +59,7 @@ const TableResult = () => {
                         </li>
                     </ul>
                 </div>
+                
             </div>
         </section>
     );
