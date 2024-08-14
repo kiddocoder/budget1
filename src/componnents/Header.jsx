@@ -1,7 +1,7 @@
 import {useState,useEffect} from 'react';
 import "../App.css";
 
-const Header = () =>{
+const Header = ({total}) =>{
       const [monthName , setMontName] = useState('');
 
        useEffect(() => {
@@ -17,7 +17,7 @@ const Header = () =>{
             <section className="header flex flex-col justify-center items-center text-white w-full h-[250px] bg-cover bg-center">
                   <div className="flex flex-col gap-2">
                         <p className="font-light text-xl text-center">Available budget in {monthName&&monthName} : </p>
-                        <p className="text-4xl text-center">+1,12548</p>
+                        <p className="text-4xl text-center">{total&&total}</p>
 
                         <div className="mt-5 flex flex-col gap-2">
                               <div className="flex justify-between p-2 bg-emerald-500">
