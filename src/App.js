@@ -13,6 +13,7 @@ const App = () => {
         value: 0,
         date: new Date()
     });
+    const [monthPro,setMonthPro] = useState(new Date().getMonth());
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth()); // Default to current month
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear()); // Default to current year
 
@@ -56,6 +57,7 @@ const App = () => {
      */
     const handleMonthChange = (e) => {
         setSelectedMonth(e.target.value);
+        setMonthPro(e.target.value);
     };
 
     const handleYearChange = (e) => {
@@ -76,6 +78,7 @@ const App = () => {
         // initialize total object
         const total = {
             all: 0,
+            Tot:0,
             expenses: 0,
             incomes: 0,
             percentIncomes: 0,
@@ -83,16 +86,17 @@ const App = () => {
         };
 
         filteredData.forEach(item => {
-            total.all += parseFloat(item.value) || 0;
             if (item.type === "income") {
                 total.incomes += parseFloat(item.value) || 0;
             } else {
                 total.expenses += parseFloat(item.value) || 0;
             }
+            total.all = total.incomes - total.expenses;
+            total.Tot += parseFloat(item.value) || 0; // total sum 
         });
 
-        total.percentIncomes = total.all ? ((total.incomes / total.all) * 100).toFixed(2) : 0;
-        total.percentExpenses = total.all ? ((total.expenses / total.all) * 100).toFixed(2) : 0;
+        total.percentIncomes =  total.Tot ? ((total.incomes /  total.Tot) * 100).toFixed(2): 0;
+        total.percentExpenses =  total.Tot ? ((total.expenses /  total.Tot) * 100).toFixed(2) : 0;
 
         return { total, filteredData };
     };
@@ -106,7 +110,7 @@ const App = () => {
     }
     return (
         <>
-            <Header total={total} />
+            <Header total={total} monthPro={monthPro} />
             <form className="flex gap-5 my-5 justify-center items-center" onSubmit={handleSubmit}>
                 <select className="p-3 w-[100px] rounded-[5px]" name='type' value={values.type} onChange={handleChange} required>
                     <option value="income">+</option>

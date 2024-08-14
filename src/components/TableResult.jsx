@@ -35,10 +35,10 @@ const TableResult = ({ data, handleDelete }) => {
                     <ul className='bg-white rounded-lg'>
                         {incomes.map((item) => (
                             <li key={item.id} className='flex justify-between p-2 odd:bg-gray-100 border border-gray-200'>
-                                <span>{item.description}</span>
+                                <span className='text-black'>{item.description}</span>
                                 <div className='flex justify-between'>
-                                    <span>{item.value}</span>
-                                    <span className='percent'>{calculateIncomePercentage(parseFloat(item.value))}%</span>
+                                    <span>+{item.value}</span>
+                                    <span className='percent text-emerald-600 ml-2 align-middle bg-emerald-100 rounded-sm p-1 text-[12px]'>{calculateIncomePercentage(parseFloat(item.value))}%</span>
                                     <span id='deletebtn' className=' ml-2 cursor-pointer' onClick={() => handleDelete(item.id)}><i class="bi bi-trash-fill"></i></span>
                                 </div>
                             </li>
@@ -49,11 +49,11 @@ const TableResult = ({ data, handleDelete }) => {
                     <h1 className='text-xl font-bold mb-2'>EXPENSES</h1>
                     <ul className='bg-white rounded-lg'>
                         {expenses.map((item) => (
-                            <li key={item.id} className='flex justify-between p-2 odd:bg-gray-100 border border-gray-200'>
-                                <span>{item.description}</span>
+                            <li key={item.id} className='flex justify-between p-2 odd:bg-gray-100 border  border-gray-200'>
+                                <span className='text-black'>{item.description}</span>
                                 <div className='flex justify-between'>
-                                    <span>{item.value}</span>
-                                    <span className='percent'>{calculateExpensePercentage(parseFloat(item.value))}%</span>
+                                    <span>-{item.value}</span>
+                                    <span className='percent align-middle text-red-600 ml-2 bg-red-100 rounded-sm p-1 text-[12px]'>{calculateExpensePercentage(parseFloat(item.value))}%</span>
                                     <span id='deletebtn' className='ml-2 cursor-pointer' onClick={() => handleDelete(item.id)}><i class="bi bi-trash-fill"></i></span>
                                 </div>
                             </li>
