@@ -18,7 +18,7 @@ const Header = () =>{
                               <div className="flex justify-between items-center p-2 bg-red-500">
                                    <span className="text-xl text-black">Expenses</span>
                                    <div className="flex justify-between">
-                                       <span className="mr-2">+1,152</span>
+                                       <span className="mr-2">-1,152</span>
                                        <span className="align-middle bg-red-300 rounded-sm p-1 text-[12px]">50%</span>
                                     </div>
                               </div>
