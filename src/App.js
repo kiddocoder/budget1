@@ -7,7 +7,7 @@ import TableResult from './components/TableResult';
 const App = () => {
     const [datas, setData] = useState([]);
     const [values, setValues] = useState({
-        id: uuidv4(), // Use UUID for unique ID
+        id: uuidv4(), // UUID unique ID
         type: "income",
         description: "",
         value: 0,
@@ -103,7 +103,7 @@ const App = () => {
 
     const { total, filteredData } = calculateTotals(datas);
 
-    // generate year range (5)
+    // generate year range 5 years before the currectMonth included
     const yearRange = [];
     for (let i = 0; i < 5; i++) {
         yearRange.push(new Date().getFullYear() - i);
