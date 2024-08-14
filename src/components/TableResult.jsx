@@ -38,7 +38,7 @@ const TableResult = ({ data, handleDelete }) => {
                                 <span className='text-black'>{item.description}</span>
                                 <div className='flex justify-between'>
                                     <span>+{item.value}</span>
-                                    <span className='percent text-emerald-600 ml-2 align-middle bg-emerald-100 rounded-sm p-1 text-[12px]'>{calculateIncomePercentage(parseFloat(item.value))}%</span>
+                                    <span className='percent text-emerald-600 ml-2 align-middle bg-emerald-100 rounded-sm p-1 text-[12px]' id="percent">{calculateIncomePercentage(parseFloat(item.value))}%</span>
                                     <span id='deletebtn' className=' ml-2 cursor-pointer' onClick={() => handleDelete(item.id)}><i class="bi bi-trash-fill"></i></span>
                                 </div>
                             </li>
@@ -53,7 +53,7 @@ const TableResult = ({ data, handleDelete }) => {
                                 <span className='text-black'>{item.description}</span>
                                 <div className='flex justify-between'>
                                     <span>-{item.value}</span>
-                                    <span className='percent align-middle text-red-600 ml-2 bg-red-100 rounded-sm p-1 text-[12px]'>{calculateExpensePercentage(parseFloat(item.value))}%</span>
+                                    <span className='percent align-middle text-red-600 ml-2 bg-red-100 rounded-sm p-1 text-[12px]' id="percent">{calculateExpensePercentage(parseFloat(item.value))}%</span>
                                     <span id='deletebtn' className='ml-2 cursor-pointer' onClick={() => handleDelete(item.id)}><i class="bi bi-trash-fill"></i></span>
                                 </div>
                             </li>

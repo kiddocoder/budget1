@@ -2,12 +2,12 @@
   background-image: url('bg.jpg');
 }
 
-#deletebtn{
+#deletebtn,#percent{
   display: none;
 }
 ul li{
   cursor: pointer;
 }
-ul li:hover #deletebtn{
+ul li:hover #deletebtn,ul li:hover #percent,.item:hover #percent {
  display: block;
 }
