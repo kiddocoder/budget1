@@ -28,7 +28,7 @@ const TableResult = ({ data, handleDelete }) => {
     };
 
     return (
-        <section className='flex justify-center items-center'>
+        <section className='flex justify-center items-cente'>
             <div className='flex space-x-10'>
                 <div className='text-emerald-500 w-[550px]'>
                     <h1 className='text-xl font-bold mb-2'>INCOMES</h1>
@@ -39,7 +39,7 @@ const TableResult = ({ data, handleDelete }) => {
                                 <div className='flex justify-between'>
                                     <span>{item.value}</span>
                                     <span className='percent'>{calculateIncomePercentage(parseFloat(item.value))}%</span>
-                                    <span id='deletebtn' className='ml-2 cursor-pointer' onClick={() => handleDelete(item.id)}>X</span>
+                                    <span id='deletebtn' className=' ml-2 cursor-pointer' onClick={() => handleDelete(item.id)}><i class="bi bi-trash-fill"></i></span>
                                 </div>
                             </li>
                         ))}
@@ -54,7 +54,7 @@ const TableResult = ({ data, handleDelete }) => {
                                 <div className='flex justify-between'>
                                     <span>{item.value}</span>
                                     <span className='percent'>{calculateExpensePercentage(parseFloat(item.value))}%</span>
-                                    <span id='deletebtn' className='ml-2 cursor-pointer' onClick={() => handleDelete(item.id)}>X</span>
+                                    <span id='deletebtn' className='ml-2 cursor-pointer' onClick={() => handleDelete(item.id)}><i class="bi bi-trash-fill"></i></span>
                                 </div>
                             </li>
                         ))}

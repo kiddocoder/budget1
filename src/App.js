@@ -99,6 +99,11 @@ const App = () => {
 
     const { total, filteredData } = calculateTotals(datas);
 
+    // generate year range (5)
+    const yearRange = [];
+    for (let i = 0; i < 5; i++) {
+        yearRange.push(new Date().getFullYear() - i);
+    }
     return (
         <>
             <Header total={total} />
@@ -109,7 +114,7 @@ const App = () => {
                 </select>
                 <input className="p-3 w-[450px] rounded-[5px]" name='description' type="text" placeholder='Add description' value={values.description} onChange={handleChange} required />
                 <input className="p-3 w-[100px] rounded-[5px]" name='value' type="number" min={0.00} step={0.1} placeholder='value' value={values.value} onChange={handleChange} required />
-                <button type='submit' className="p-3 border-neutral-800 bg-green-800 rounded-[5px] text-white text-[18px] cursor-pointer">Add</button>
+                <button type='submit' className="p-3 border-neutral-800 bg-white rounded-[5px] text-emerald-500 text-[18px] cursor-pointer"><i class="bi bi-check-circle"></i></button>
             </form>
 
             {/* Month and Year Selector */}
@@ -117,20 +122,20 @@ const App = () => {
                 <select className="p-3 rounded-[5px]" value={selectedMonth} onChange={handleMonthChange}>
                     {Array.from({ length: 12 }, (_, index) => (
                         <option key={index} value={index}>
-                            {new Date(0, index).toLocaleString('default', { month: 'long' })}
+                            {new Date(0, index).toLocaleString('en-US', { month: 'long' })}
                         </option>
                     ))}
                 </select>
+
                 <select className="p-3 rounded-[5px]" value={selectedYear} onChange={handleYearChange}>
-                    {/* You can modify the range of years as needed */}
-                    {[2024,2023, 2022, 2021].map(year => (
+                    {yearRange.map(year => (
                         <option key={year} value={year}>{year}</option>
                     ))}
                 </select>
             </div>
 
             {/* Displaying filtered data */}
-            <TableResult data={filteredData} handleDelete={handleDelete} />
+            <TableResult  data={filteredData} handleDelete={handleDelete} />
         </>
     )
 }
