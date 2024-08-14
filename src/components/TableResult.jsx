@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import formatNumber from "../utils";
 import "../App.css";
 
 const TableResult = ({ data, handleDelete }) => {
@@ -8,6 +9,7 @@ const TableResult = ({ data, handleDelete }) => {
     const [totalExpenses, setTotalExpenses] = useState(0);
 
     useEffect(() => {
+        //filter items
         const incomeItems = Array.isArray(data) ? data.filter(item => item.type === "income") : [];
         const expenseItems = Array.isArray(data) ? data.filter(item => item.type === "expense") : [];
         setIncomes(incomeItems);
@@ -37,7 +39,7 @@ const TableResult = ({ data, handleDelete }) => {
                             <li key={item.id} className='flex justify-between p-2 odd:bg-gray-100 border border-gray-200'>
                                 <span className='text-black'>{item.description}</span>
                                 <div className='flex justify-between'>
-                                    <span>+{item.value}</span>
+                                    <span>+{formatNumber(item.value)}</span>
                                     <span className='percent text-emerald-600 ml-2 align-middle bg-emerald-100 rounded-sm p-1 text-[12px]' id="percent">{calculateIncomePercentage(parseFloat(item.value))}%</span>
                                     <span id='deletebtn' className=' ml-2 cursor-pointer' onClick={() => handleDelete(item.id)}><i class="bi bi-trash-fill"></i></span>
                                 </div>
@@ -52,7 +54,7 @@ const TableResult = ({ data, handleDelete }) => {
                             <li key={item.id} className='flex justify-between p-2 odd:bg-gray-100 border  border-gray-200'>
                                 <span className='text-black'>{item.description}</span>
                                 <div className='flex justify-between'>
-                                    <span>-{item.value}</span>
+                                    <span>-{formatNumber(item.value)}</span>
                                     <span className='percent align-middle text-red-600 ml-2 bg-red-100 rounded-sm p-1 text-[12px]' id="percent">{calculateExpensePercentage(parseFloat(item.value))}%</span>
                                     <span id='deletebtn' className='ml-2 cursor-pointer' onClick={() => handleDelete(item.id)}><i class="bi bi-trash-fill"></i></span>
                                 </div>
