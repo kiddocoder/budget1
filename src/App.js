@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { v4 as uuidv4 } from 'uuid'; // Import UUID
+import { v4 as uuidv4 } from 'uuid';
 import './App.css';
 import Header from './components/Header';
 import TableResult from './components/TableResult';
@@ -21,10 +21,19 @@ const App = () => {
         setData(Array.isArray(localData) ? localData : []);
     }, []);
 
+
+    /**
+     * @param {e} event for inputs
+     * @returns void
+     */
     const handleChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value });
     }
 
+    /**
+     * @param {e} event of form submittion
+     * @returns void
+     */
     const handleSubmit = (e) => {
         e.preventDefault();
         if (values.description && values.value) {
@@ -37,10 +46,14 @@ const App = () => {
 
     const handleDelete = (id) => {
         const updatedData = datas.filter(item => item.id !== id);
-        localStorage.setItem('data', JSON.stringify(updatedData)); // Update local storage
-        setData(updatedData); // Update state
+        localStorage.setItem('data', JSON.stringify(updatedData)); // Update Data
+        setData(updatedData); // Update state UI
     };
 
+    /**
+     * @param {e} event when user select month and year
+     * @returns void
+     */
     const handleMonthChange = (e) => {
         setSelectedMonth(e.target.value);
     };
@@ -49,6 +62,10 @@ const App = () => {
         setSelectedYear(e.target.value);
     };
 
+    /**
+     * @param {Array <data>}
+     * @returns Object <total> of totals
+     */
     const calculateTotals = (data) => {
         // Filter data for selected month and year
         const filteredData = data.filter(item => {
@@ -56,6 +73,7 @@ const App = () => {
             return itemDate.getMonth() === parseInt(selectedMonth) && itemDate.getFullYear() === parseInt(selectedYear);
         });
 
+        // initialize total object
         const total = {
             all: 0,
             expenses: 0,
