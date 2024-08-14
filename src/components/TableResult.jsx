@@ -1,17 +1,31 @@
 import { useState, useEffect } from 'react';
 import "../App.css";
 
-const TableResult = ({ data }) => {
+const TableResult = ({ data, handleDelete }) => {
     const [incomes, setIncomes] = useState([]);
     const [expenses, setExpenses] = useState([]);
+    const [totalIncomes, setTotalIncomes] = useState(0);
+    const [totalExpenses, setTotalExpenses] = useState(0);
 
     useEffect(() => {
-        // Ensure data is an array
         const incomeItems = Array.isArray(data) ? data.filter(item => item.type === "income") : [];
         const expenseItems = Array.isArray(data) ? data.filter(item => item.type === "expense") : [];
         setIncomes(incomeItems);
         setExpenses(expenseItems);
+
+        const totalIncome = incomeItems.reduce((acc, item) => acc + parseFloat(item.value || 0), 0);
+        const totalExpense = expenseItems.reduce((acc, item) => acc + parseFloat(item.value || 0), 0);
+        setTotalIncomes(totalIncome);
+        setTotalExpenses(totalExpense);
     }, [data]);
+
+    const calculateIncomePercentage = (value) => {
+        return totalIncomes ? ((value / totalIncomes) * 100).toFixed(2) : 0;
+    };
+
+    const calculateExpensePercentage = (value) => {
+        return totalExpenses ? ((value / totalExpenses) * 100).toFixed(2) : 0;
+    };
 
     return (
         <section className='flex justify-center items-center'>
@@ -24,7 +38,8 @@ const TableResult = ({ data }) => {
                                 <span>{item.description}</span>
                                 <div className='flex justify-between'>
                                     <span>{item.value}</span>
-                                    <span id='deletebtn' className='ml-2'>X</span>
+                                    <span className='percent'>{calculateIncomePercentage(parseFloat(item.value))}%</span>
+                                    <span id='deletebtn' className='ml-2 cursor-pointer' onClick={() => handleDelete(item.id)}>X</span>
                                 </div>
                             </li>
                         ))}
@@ -38,7 +53,8 @@ const TableResult = ({ data }) => {
                                 <span>{item.description}</span>
                                 <div className='flex justify-between'>
                                     <span>{item.value}</span>
-                                    <span id='deletebtn' className='ml-2'>X</span>
+                                    <span className='percent'>{calculateExpensePercentage(parseFloat(item.value))}%</span>
+                                    <span id='deletebtn' className='ml-2 cursor-pointer' onClick={() => handleDelete(item.id)}>X</span>
                                 </div>
                             </li>
                         ))}

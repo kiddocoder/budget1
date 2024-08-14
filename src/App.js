@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from 'uuid'; // Import UUID
 import './App.css';
 import Header from './components/Header';
 import TableResult from './components/TableResult';
@@ -6,7 +7,7 @@ import TableResult from './components/TableResult';
 const App = () => {
     const [datas, setData] = useState([]);
     const [values, setValues] = useState({
-        id: Date.now(),
+        id: uuidv4(), // Use UUID for unique ID
         type: "income",
         description: "",
         value: 0,
@@ -14,9 +15,8 @@ const App = () => {
     });
 
     useEffect(() => {
-        // Retrieve data from local storage and ensure it's an array
-        const localData = JSON.parse(localStorage.getItem('data'));
-        setData(Array.isArray(localData) ? localData : []); // Default to empty array if not an array
+        const localData = JSON.parse(localStorage.getItem('data')) || [];
+        setData(Array.isArray(localData) ? localData : []);
     }, []);
 
     const handleChange = (e) => {
@@ -25,15 +25,19 @@ const App = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        // Ensure values are valid before adding to datas
         if (values.description && values.value) {
-            const newData = [...datas, { ...values, id: Date.now() }]; // Add unique id to the new item
-            localStorage.setItem('data', JSON.stringify(newData)); // Update local storage
-            setData(newData); // Update state
-            setValues({ type: "income", description: "", value: 0 }); // Reset values after submission
+            const newData = [...datas, { ...values, id: uuidv4() }]; // Use UUID for new items
+            localStorage.setItem('data', JSON.stringify(newData));
+            setData(newData);
+            setValues({ id: uuidv4(), type: "income", description: "", value: 0 }); // Reset values
         }
     }
+
+    const handleDelete = (id) => {
+        const updatedData = datas.filter(item => item.id !== id);
+        localStorage.setItem('data', JSON.stringify(updatedData)); // Update local storage
+        setData(updatedData); // Update state
+    };
 
     const calculateTotals = (data) => {
         if (!Array.isArray(data)) return { all: 0, expenses: 0, incomes: 0, percentIncomes: 0, percentExpenses: 0 };
@@ -75,7 +79,7 @@ const App = () => {
                 <input className="p-3 w-[100px] rounded-[5px]" name='value' type="number" min={0.00} step={0.1} placeholder='value' value={values.value} onChange={handleChange} required />
                 <button type='submit' className="p-3 border-neutral-800 bg-green-800 rounded-[5px] text-white text-[18px] cursor-pointer">Add</button>
             </form>
-            <TableResult data={datas} />
+            <TableResult data={datas} handleDelete={handleDelete} />
         </>
     )
 }
