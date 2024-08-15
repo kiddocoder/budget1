@@ -118,7 +118,7 @@ const App = () => {
                 </select>
                 <input className="p-3 w-[450px] rounded-[5px]" name='description' type="text" placeholder='Add description' value={values.description} onChange={handleChange} required />
                 <input className="p-3 w-[100px] rounded-[5px]" name='value' type="number" min={0.00} step={0.1} placeholder='value' value={values.value} onChange={handleChange} required />
-                <button type='submit' className="p-3 border-neutral-800 bg-white rounded-[5px] text-emerald-500 text-[18px] cursor-pointer"><i class="bi bi-check-circle"></i></button>
+                <button type='submit' className="p-3 border-neutral-800 bg-white rounded-[5px] text-emerald-500 text-[18px] cursor-pointer"><i className="bi bi-check-circle"></i></button>
             </form>
 
             {/* Month and Year Selector */}
